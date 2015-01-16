@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# default to chord
+if [ "$#" -eq 0 ]; then
+  viewer="chord"
+else
+  viewer="$1"
+fi
+
+# pick a viewer.
+case $viewer in
+  chord) vhash="QmX8PuUyhSet8fppZHuRNxG7vk949z7XDxnsAz3zN77MGx" ;;
+  force) vhash="QmaY6Lq9MEhDfWUc1VfHcu9aLWSyvi4VDLvWQXLoVZ4Mau" ;;
+  *) echo "error: no viewer $viewer" && exit 1 ;;
+esac
+
+# put stdin in temp file
+file=`mktemp -t d3view`
+cat >"$file"
+
+# add file to ipfs
+dhash=$(ipfs add -q "$file" </dev/null | tail -n1)
+
+# the ipfs gateway to use
+gatewayHTTP="http://ipfs.benet.ai:8080"
+gatewayIPFS="/ip4/104.236.32.22/tcp/4001/Qme7peMbkRH8qzb9TMXSoRwVmVDZz3Z4dseRXAyBwBmxA7"
+
+# make sure you're reachable (no NAT yet)
+ipfs swarm connect "$gatewayIPFS" </dev/null >/dev/null
+
+# output the url at the gateway
+url="$gatewayHTTP/ipfs/$vhash#$dhash"
+echo "$url"
