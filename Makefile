@@ -8,7 +8,7 @@ ipfs-check:
 
 # publish the whole directory. yup.
 publish: ipfs-check
-	$(eval _published_hash := `ipfs add -q -r . </dev/null | tail -n1`)
+	$(eval _published_hash := `ipfs add -q -r viewers </dev/null | tail -n1`)
 	@echo "published at /ipfs/${_published_hash}"
 
 # install to $install_path

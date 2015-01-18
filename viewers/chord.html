@@ -78,7 +78,10 @@ d3.json(hash, function(error, data) {
   var p = projection
 
   node.append("svg:circle")
-    .attr("r", function(d) { return d.conns + 2; })
+    .attr("r", function(d) {
+      var normsize = (d.conns / graph.totalConns)
+      return 2 + (20 * normsize);
+    })
     .style("fill", function(d, i) { return color(i % 20); })
     .attr("transform", function(d) { return "rotate(" + (d.x - 90 + rotate) + ")translate(" + d.y + ")"; })
 
@@ -136,6 +139,7 @@ function parseGraph(graph2) {
   graph.paths = []
   graph.byName = {}
   graph.mids = []
+  graph.totalConns = 0
 
   graph2.nodes.sort(function(a, b) {
     var aname = a.rtkey || a.name
@@ -161,6 +165,7 @@ function parseGraph(graph2) {
     var target = graph2.nodes[link.target]
     source.conns++
     target.conns++
+    graph.totalConns++
 
     var mid = curveNode(source, target)
     graph.mids.push(mid)
