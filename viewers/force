@@ -15,6 +15,7 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 var hash = window.location.hash.substring(1)
+var url = "/ipfs/" + hash
 
 var width = 960,
     height = 800;
@@ -28,7 +29,7 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-d3.json(hash, function(error, graph) {
+d3.json(url, function(error, graph) {
   force
       .nodes(graph.nodes)
       .links(graph.links)

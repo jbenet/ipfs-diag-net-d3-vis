@@ -9,8 +9,8 @@ fi
 
 # pick a viewer.
 case $viewer in
-  chord) vhash="QmX8PuUyhSet8fppZHuRNxG7vk949z7XDxnsAz3zN77MGx" ;;
-  force) vhash="QmaY6Lq9MEhDfWUc1VfHcu9aLWSyvi4VDLvWQXLoVZ4Mau" ;;
+  chord) vpath="/ipfs/QmbesKpGyQGd5jtJFUGEB1ByPjNFpukhnKZDnkfxUiKn38/chord" ;;
+  force) vpath="/ipfs/QmbesKpGyQGd5jtJFUGEB1ByPjNFpukhnKZDnkfxUiKn38/force" ;;
   *) echo "error: no viewer $viewer" && exit 1 ;;
 esac
 
@@ -29,5 +29,5 @@ gatewayIPFS="/ip4/104.236.32.22/tcp/4001/Qme7peMbkRH8qzb9TMXSoRwVmVDZz3Z4dseRXAy
 ipfs swarm connect "$gatewayIPFS" </dev/null >/dev/null
 
 # output the url at the gateway
-url="$gatewayHTTP/ipfs/$vhash#$dhash"
+url="$gatewayHTTP$vpath#$dhash"
 echo "$url"

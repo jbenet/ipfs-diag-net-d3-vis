@@ -47,6 +47,7 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 var hash = window.location.hash.substring(1)
+var url = "/ipfs/" + hash
 
 var diameter = 1400,
     radius = diameter / 2,
@@ -66,7 +67,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + radius + "," + radius + ")");
 
-d3.json(hash, function(error, data) {
+d3.json(url, function(error, data) {
 
   graph = parseGraph(data)
 
